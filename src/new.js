@@ -11,25 +11,21 @@ const toDoList = [];
 
 function App() {
   const [todo, setTodo] = useState('');
-  const [toDoArray, setArray] = useState(['ToDoes']);
-  console.log(toDoArray.length);
-  let i;
+  const [toDoArrey, setArrey] = useState[''];
+
   return (
     <>
       <div>todos</div>
       <label>Add a new Todo: </label>
       <AddToDo value={todo} onChange={e => setTodo(e.target.value)} />
-      <button onClick={() => setArray([...toDoArray, todo])}>
-        Add to you list
-      </button>
-
+      <button onClick={() => setArrey.push(todo)}>X</button>
       <ul>
-        {toDoArray.map((value, index) => {
-          return <li key={index}>{value}</li>;
-        })}
+        <li>{todo}</li>
       </ul>
     </>
   );
 }
 
 export default App;
+
+<AddToDo value={todo} onChange={e => setTodo(e.target.value)} />;
