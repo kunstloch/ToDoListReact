@@ -3,31 +3,66 @@ import styled from 'styled-components';
 
 const AddToDo = styled.input`
   box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 3px;
-  padding: 15px 20px;
-  display: flex;
+  margin: 15px 20px;
 `;
 
-const toDoList = [];
-
 function App() {
-  const [todo, setTodo] = useState('');
-  const [toDoArray, setArray] = useState(['ToDoes']);
+  const initialState = {
+    content: '',
+    finished: false,
+    prio: false
+  };
+  const [todo, setTodo] = useState(initialState);
+  const [toDoArray, setArray] = useState([]);
+
+  // Just to see what console says :-)
   console.log(toDoArray.length);
+  console.log(todo);
+  console.log(toDoArray);
+
   let i;
   return (
     <>
-      <div>todos</div>
+      <h1>TODO - LIST</h1>
       <label>Add a new Todo: </label>
-      <AddToDo value={todo} onChange={e => setTodo(e.target.value)} />
-      <button onClick={() => setArray([...toDoArray, todo])}>
+      <div>
+        <AddToDo
+          value={todo.content}
+          placeholder="New Todo"
+          onChange={e => setTodo({ ...todo, content: e.target.value })}
+        />
+      </div>
+
+      <button
+        onClick={() => {
+          if (todo.content !== '') {
+            setArray([...toDoArray, todo.content]);
+            setTodo(initialState);
+          }
+        }}
+      >
         Add to you list
       </button>
 
-      <ul>
-        {toDoArray.map((value, index) => {
-          return <li key={index}>{value}</li>;
-        })}
-      </ul>
+      {toDoArray.map((value, index) => {
+        return (
+          <li
+            style={{ textDecoration: todo.finished ? 'line-through' : '' }}
+            key={index}
+          >
+            {value}
+            <button
+              onClick={() => {
+                const newtoDoArray = [...toDoArray];
+                newtoDoArray[index].finished = !toDoArray[index].finished;
+                setArray(newtoDoArray);
+              }}
+            >
+              Complete
+            </button>
+          </li>
+        );
+      })}
     </>
   );
 }
